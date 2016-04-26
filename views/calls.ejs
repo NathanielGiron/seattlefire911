@@ -69,10 +69,11 @@ $(document).ready(function() {
 		setTimeout(function(){
 			map.setCenter({lat: latitude, lng: longitude});
 		}, 1000);
-		 //  console.log(latitude, longitude, longitude === map.getCenter().lng());
+			// console.log(latitude, longitude, longitude === map.getCenter().lng());
 			// console.log(map.getCenter().lat(), map.getCenter().lng());
 			// console.log('------');
 	  }
+	  map.setCenter({lat: latitude, lng: longitude});
 		// console.log('yay');
 		// console.log(latitude, longitude, latitude === map.getCenter().lat());
 		// console.log(map.getCenter().lat(), map.getCenter().lng());
