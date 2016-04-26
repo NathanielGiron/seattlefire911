@@ -1,0 +1,12 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 30px;
+}
+.header {
+	background-image: url('header.jpg');
+	height: 500px;
+}
+
+#map {
+  height: 500px;
+}

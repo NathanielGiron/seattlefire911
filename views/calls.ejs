@@ -1,0 +1,73 @@
+<table class="table table-bordered table-striped table-hover">
+	<thead>
+		<tr>
+			<th>Incident Number</th>
+			<th>Address</th>
+			<th>Type</th>
+			<th>Datetime</th>
+			<th>Report Location</th>
+			<th>Open Map</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% calls.forEach(function(call) { %>
+			<tr>
+				<td><%= call.incident_number %></td>
+				<td><%= call.address %></td>
+				<td><%= call.type %></td>
+				<td><%= call.datetime %></td>
+				<td><%= call.latitude + " " + call.longitude %></td>
+				<td align="center"><button type="button" class="btn btn-primary btn-sm btn-open-map" data-toggle="modal" data-target="#myModal" data-address="<%= call.address %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><span class="glyphicon glyphicon-search"></span></button></td>
+			</tr>
+
+		<% }); %>
+	</tbody>
+</table>
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+
+		    <div id='map'></div>
+		    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close Map</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+var map;
+$(document).ready(function() {
+	$('button.btn-open-map').on('click',function() {
+		var latitude = $(this).data('latitude');
+		var longitude = $(this).data('longitude');
+		var address = $(this).data('address');
+
+		console.log(latitude);
+		console.log(longitude);
+		$('#myModal #myModalLabel').html(address);
+	  if (!map) {
+	  	console.log("first map")
+	  	map = new google.maps.Map(document.getElementById('map'), {
+		    center: {lat: latitude, lng: longitude},
+		    zoom: 17
+		  });
+	  } else {
+		  console.log("map exists")
+		}
+		map.setCenter({lat: latitude, lng: longitude});
+		
+	});
+});
+</script>
