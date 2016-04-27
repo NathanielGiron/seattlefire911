@@ -10,3 +10,13 @@ body {
 #map {
   height: 500px;
 }
+
+h2 {
+	margin-top:0;
+}
+
+h3 {
+	font-size: 11pt;
+	margin:0;
+	padding:3px;
+}

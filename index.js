@@ -12,9 +12,13 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
+app.get('/about', function(req, res) {
+	res.render('about');
+});
+
 app.get('/calls', function(req, res) {
 
-	request('https://data.seattle.gov/resource/grwu-wqtk.json?$limit=50&$offset=0', function(err, response, body) {
+	request('https://data.seattle.gov/resource/grwu-wqtk.json?$$app_token=dBK5bIxAg9J3pBe4V92wmtfeS', function(err, response, body) {
 		var dataObj = JSON.parse(body);
 		if(!err && response.statusCode === 200) {
 			res.render('calls', {calls: dataObj});

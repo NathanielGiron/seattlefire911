@@ -1,31 +1,80 @@
-<table class="table table-bordered table-striped table-hover">
-	<thead>
-		<tr>
-			<th>Incident Number</th>
-			<th>Address</th>
-			<th>Type</th>
-			<th>Datetime</th>
-			<th>Report Location</th>
-			<th>Open Map</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% calls.forEach(function(call) { %>
+<h2><small>Seattle Real Time Fire 911 Calls</small></h2>
+<hr>
+
+<div id="tablewrapper">
+
+	<div id="tableheader">
+	  <div class="search pull-left">
+	    <select id="columns" onchange="sorter.search('query')"></select>
+	    <input type="text" id="query" onkeyup="sorter.search('query')" />
+	  </div>
+	  <span class="details pull-right">
+	    <div>Records <span id="startrecord"></span>-<span id="endrecord"></span> of <span id="totalrecords"></span></div>
+	    <div class="pull-right"><a href="javascript:sorter.reset()">Reset</a></div>
+	  </span>
+	</div>
+
+	<table id="table" class="table table-hover table-bordered table-striped">
+		<thead>
 			<tr>
-				<td><%= call.incident_number %></td>
-				<td><%= call.address %></td>
-				<td><%= call.type %></td>
-				<td><%= call.datetime %></td>
-				<td><%= call.latitude + " " + call.longitude %></td>
-				<td align="center"><button type="button" class="btn btn-primary btn-sm btn-open-map" data-toggle="modal" data-target="#myModal" data-address="<%= call.address %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><span class="glyphicon glyphicon-search"></span></button></td>
+				<th><h3>Datetime</h3></th>
+				<th><h3>Incident Number</h3></th>
+				<th><h3>Address</h3></th>
+				<th><h3>Type</h3></th>
+				
+				<th><h3>Report Location</h3></th>
+				<th><h3>Open Map</h3></th>
 			</tr>
+		</thead>
+		<tbody>
+			<% calls.forEach(function(call) { %>
+				<tr>
+					<td><%= call.datetime %></td>
+					<td><%= call.incident_number %></td>
+					<td><%= call.address %></td>
+					<td><%= call.type %></td>
+					
+					<td><%= call.latitude + " " + call.longitude %></td>
+					<td align="center"><button type="button" class="btn btn-primary btn-sm btn-open-map" data-toggle="modal" data-target="#myModal" data-address="<%= call.address %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><span class="glyphicon glyphicon-search"></span></button></td>
+				</tr>
 
-		<% }); %>
-	</tbody>
-</table>
+			<% }); %>
+		</tbody>
+	</table>
 
+	<div id="tablefooter">
+	  <div id="tablenav" class="pull-left">
+	    <div class="navicons">
+	      <img src="images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" />
+	      <img src="images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" />
+	      <img src="images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" />
+	      <img src="images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+	    </div>
+	    <div>
+	      Page <select id="pagedropdown" style="width:55px;"></select>
+	      or<a href="javascript:sorter.showall()"> View all</a>
+	    </div>
+	    <div class="viewall">
+	      
+	    </div>
+	  </div>
+	  <div id="tablelocation" class="pull-right">
+	    <div>
+	      <select onchange="sorter.size(this.value)" style="width:65px;">
+	        <option value="5">5</option>
+	        <option value="10" selected="selected">10</option>
+	        <option value="20">20</option>
+	        <option value="50">50</option>
+	        <option value="100">100</option>
+	      </select>
+	      <span>Entries Per Page</span>
+	    </div>
+	    <div class="page pull-right"><small>Page <span id="currentpage"></span> of <span id="totalpages"></span></small></div>
+	  </div>
+	</div>
+</div>
 
-
+<!--MODAL-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -45,51 +94,3 @@
   </div>
 </div>
 
-
-<script>
-var map;
-
-$(document).ready(function() {
-	$('button.btn-open-map').on('click',function() {
-
-		var latitude = $(this).data('latitude');
-		var longitude = $(this).data('longitude');
-		var address = $(this).data('address');
-
-		var myLatlng = new google.maps.LatLng(latitude,longitude);
-
-		$('#myModal #myModalLabel').html(address);
-	  if (!map) {
-	  	console.log("first map")
-	  	map = new google.maps.Map(document.getElementById('map'), {
-	  		center: {lat: latitude, lng: longitude},
-		    zoom: 17
-		  });
-
-		setTimeout(function(){
-			map.setCenter({lat: latitude, lng: longitude});
-		}, 1000);
-			// console.log(latitude, longitude, longitude === map.getCenter().lng());
-			// console.log(map.getCenter().lat(), map.getCenter().lng());
-			// console.log('------');
-	  }
-	  map.setCenter({lat: latitude, lng: longitude});
-		// console.log('yay');
-		// console.log(latitude, longitude, latitude === map.getCenter().lat());
-		// console.log(map.getCenter().lat(), map.getCenter().lng());
-		// console.log('------');
-
-		var marker = new google.maps.Marker({
-	    position: myLatlng,
-	    title:"Hello World!"
-		});
-
-		marker.setMap(map);
-	});
-
-	$('#myModal').on('shown.bs.modal',function() {
-	  google.maps.event.trigger(map, "resize");
-	});
-
-});
-</script>
