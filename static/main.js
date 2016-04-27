@@ -7,7 +7,7 @@ $('ul.nav a').filter(function() {
     return this.href == url;
 }).parent().addClass('active');
 
-//GOOGLE MAP SCRIPT
+//-----GOOGLE MAP SCRIPT----->
 var map;
 
 $(document).ready(function() {
@@ -53,3 +53,39 @@ $(document).ready(function() {
 	});
 
 });
+//-----END GOOGLE MAP SCRIPT----->
+
+//-----ADD REFERENCE----->
+$(document).ready(function() {
+	$('button.btn-flag').on('click',function(e) {
+		var newFlag = {
+			datetime: $(this).data('datetime'),
+			incident_number: $(this).data('incidentnum'),
+			address: $(this).data('address'),
+			type: $(this).data('type'),
+			latitude: $(this).data('latitude'),
+			longitude: $(this).data('longitude')
+		}
+
+		console.log($(this).data('latitude'));
+		console.log(newFlag);
+
+		$.ajax({
+			url: '/flags',
+			method: 'POST',
+			data: newFlag,
+			sucess: function() {
+				window.location = '/flags'
+			}
+		});
+	});
+});
+
+//-----END ADD REFERENCE----->
+
+
+
+
+
+
+

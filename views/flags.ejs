@@ -1,9 +1,8 @@
-<h2><small><i class="fa fa-table" aria-hidden="true"></i> Seattle Real Time Fire 911 Calls</small></h2>
-<hr>
+<h2><small><i class="fa fa-flag-o" aria-hidden="true"></i> Flagged Items</small></h2>
 
 <div id="tablewrapper">
 
-	<div id="tableheader">
+<div id="tableheader">
 	  <div class="search pull-left">
 	    <select id="columns" onchange="sorter.search('query')"></select>
 	    <input type="text" id="query" onkeyup="sorter.search('query')" />
@@ -14,34 +13,32 @@
 	  </span>
 	</div>
 
-	<table id="table" class="table table-hover table-bordered table-striped">
-		<thead>
+<table id="table" class="table table-hover table-bordered table-striped">
+	<thead>
+		<tr>
+			<th><h3>Datetime</h3></th>
+			<th><h3>Incident Number</h3></th>
+			<th><h3>Address</h3></th>
+			<th><h3>Type</h3></th>
+			<th><h3>Report Location</h3></th>
+			<th><h3>Actions</h3></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% flags.forEach(function(flag) { %>
 			<tr>
-				<th><h3>Datetime</h3></th>
-				<th><h3>Incident Number</h3></th>
-				<th><h3>Address</h3></th>
-				<th><h3>Type</h3></th>
-				<th><h3>Report Location</h3></th>
-				<th><h3>Actions</h3></th>
+				<td><%= flag.datetime %></td>
+				<td><%= flag.incident_number %></td>
+				<td><%= flag.address %></td>
+				<td><%= flag.type %></td>
+				<td><%= flag.latitude %> <%= flag.longitude %></td>
+				<td align="center">
+						<button type="button" class="btn btn-primary btn-sm btn-open-map" data-toggle="modal" data-target="#myModal" data-tooltip="true" data-placement="top" title="Open Map" data-address="<%= flag.address %>" data-latitude="<%= flag.latitude %>" data-longitude="<%= flag.longitude %>"><i class="fa fa-map-o" aria-hidden="true"></i></button>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			<% calls.forEach(function(call) { %>
-				<tr>
-					<td><%= call.datetime %></td>
-					<td><%= call.incident_number %></td>
-					<td><%= call.address %></td>
-					<td><%= call.type %></td>
-					<td><%= call.latitude %> <%= call.longitude %></td>
-					<td align="center">
-						<button type="button" class="btn btn-primary btn-sm btn-open-map" data-toggle="modal" data-target="#myModal" data-tooltip="true" data-placement="top" title="Open Map" data-address="<%= call.address %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><i class="fa fa-map-o" aria-hidden="true"></i></button>
-
-						<button type="button" class="btn btn-success btn-sm btn-flag" data-tooltip="true" data-placement="top" title="Flag this!" data-address="<%= call.address %>" data-incidentnum="<%= call.incident_number %>" data-datetime="<%= call.datetime %>" data-type="<%= call.type %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><i class="fa fa-flag-o" aria-hidden="true"></i></button>
-					</td>
-				</tr>
-			<% }); %>
-		</tbody>
-	</table>
+		<% }); %>
+	</tbody>
+</table>
 
 	<div id="tablefooter">
 	  <div id="tablenav" class="pull-left">
@@ -94,4 +91,3 @@
     </div>
   </div>
 </div>
-
