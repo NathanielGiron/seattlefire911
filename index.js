@@ -57,7 +57,7 @@ app.get('/calls', function(req, res) {
 });
 
 app.get('/flags', function(req, res) {
-	db.flag.findAll().then(function(flags) {
+	db.flag.findAll({where: {userId: req.session.userId}}).then(function(flags) {
 		res.render('flags', {flags: flags})
 	});
 });
@@ -68,6 +68,7 @@ app.post('/flags', function(req, res) {
 	console.log(newFlag);
 
 	db.flag.create(newFlag).then(function(flag) {
+		req.currentUser.addFlag(flag);
 		console.log('newFlag')
 		res.status(200).send(flag);
 	});

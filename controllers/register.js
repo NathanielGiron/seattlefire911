@@ -17,6 +17,7 @@ router.post('/', function(req, res) {
     }
   }).spread(function(user, created) {
   	if(created) {
+  		req.session.userId = user.id;
   		req.flash('success', 'Successfully Registered! Please Login')
     	res.redirect('/');
     } else {
