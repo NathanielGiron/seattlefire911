@@ -3,6 +3,11 @@ var ejsLayouts = require('express-ejs-layouts');
 var request = require('request');
 var db = require('./models');
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
+var session = require('express-session');
+
+var registerCtrl = require('./controllers/register');
+var loginCtrl = require('./controllers/login');
 
 var app = express();
 
@@ -10,9 +15,33 @@ app.set('view engine', 'ejs');
 app.use(ejsLayouts);
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(__dirname + '/static'));
+app.use(flash());
+
+app.use(session({
+  secret: 'dsalkfjasdflkjgdfblknbadiadsnkl',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(function(req, res, next) {
+  if (req.session.userId) {
+    db.user.findById(req.session.userId).then(function(user) {
+      req.currentUser = user;
+      res.locals.currentUser = user;
+      next();
+    });
+  } else {
+    req.currentUser = false;
+    res.locals.currentUser = false;
+    next();
+  }
+});
+
+app.use('/register', registerCtrl);
+app.use('/login', loginCtrl);
 
 app.get('/', function(req, res) {
-	res.render('index');
+	res.render('index', {alerts: req.flash()});
 });
 
 app.get('/calls', function(req, res) {
@@ -38,22 +67,14 @@ app.post('/flags', function(req, res) {
 
 	console.log(newFlag);
 
-	db.flag.create(newFlag).then(function() {
-		res.status(200).send('Flagged Item.');
+	db.flag.create(newFlag).then(function(flag) {
+		console.log('newFlag')
+		res.status(200).send(flag);
 	});
 });
 
 app.get('/about', function(req, res) {
 	res.render('about');
-});
-
-//-----AUTHENTICATION----->
-app.get('/register', function(req, res) {
-	res.render('register');
-});
-
-app.get('/login', function(req, res) {
-	res.render('login');
 });
 
 var port = 3000;

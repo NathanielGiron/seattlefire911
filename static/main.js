@@ -67,15 +67,12 @@ $(document).ready(function() {
 			longitude: $(this).data('longitude')
 		}
 
-		console.log($(this).data('latitude'));
-		console.log(newFlag);
-
 		$.ajax({
 			url: '/flags',
 			method: 'POST',
 			data: newFlag,
-			sucess: function() {
-				window.location = '/flags'
+			success: function() {
+				window.location = '/flags';
 			}
 		});
 	});

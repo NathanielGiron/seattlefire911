@@ -1,13 +1,17 @@
 <h2><small><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Register</small></h2>
 
-<form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Username</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+<form method="POST" action="/register">
+	<div class="form-group">
+    <label for="username">Name</label>
+    <input type="text" class="form-control" name="name" placeholder="Name">
+  </div>
+	<div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" name="email" placeholder="Email">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password">
   </div>
   <button type="submit" class="btn btn-primary">Register</button>
 </form>

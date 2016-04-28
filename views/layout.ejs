@@ -9,13 +9,17 @@
   </head>
   <body>
   	<% include nav %>
+  	<% if (typeof alerts !== 'undefined') { %>
+		  <% for (key in alerts) { %>
+		    <% alerts[key].forEach(function(thisMsg) { %>
+		      <div class="alert alert-<%= key %>"><%= thisMsg %></div>
+		    <% }); %>
+		  <% } %>
+		<% } %>
     <div class="container">
       <%- body %>
     </div>
-    <div class="container">
-    	<hr>
-    	<div align="center">Made by this <a href="https://twitter.com/NathanielGiron" target="_blank">Guy</a> for his first full stack project at General Assembly.</div>
-    </div>
+    <% include footer %>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>

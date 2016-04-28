@@ -2,21 +2,31 @@ body {
 	padding-top: 60px;
 	padding-bottom: 30px;
 }
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #ec6952;
+}
 .header {
-	background-image: url('header.jpg');
+	background-image: url('images/header.jpg');
 	height: 500px;
 }
-
+.header-body{
+	padding-top: 180px;
+	text-align: center;
+}
+#header-title {
+	font-weight: 200;
+	color: #fff;
+}
 #map {
 	height: 500px;
 }
-
 h2 {
 	margin-top:0;
 }
-
 h3 {
 	font-size: 11pt;
 	margin:0;
 	padding:3px;
 }
+
