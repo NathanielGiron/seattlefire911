@@ -14,16 +14,20 @@ router.post('/', function(req, res) {
       res.send(err);
     } else if (user) {
       req.session.userId = user.id;
+      req.flash('success', 'Successfully logged in.');
       res.redirect('/');
     } else {
-      res.send('User and/or password invalid!');
+      req.flash('danger','User and/or password invalid!');
+      res.redirect('/login');
     }
   });
 });
 
 router.get('/logout', function(req, res){
   req.session.user = false;
-  req.flash('logged', 'You have sucessfully logged out.');
+  req.currentUser = false;
+  res.locals.currentUser = false;
+  req.flash('success', 'You have sucessfully logged out.');
   res.redirect('/');
 });
 

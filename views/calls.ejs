@@ -35,8 +35,9 @@
 					<td><%= call.latitude %> <%= call.longitude %></td>
 					<td align="center">
 						<button type="button" class="btn btn-primary btn-sm btn-open-map" data-toggle="modal" data-target="#myModal" data-tooltip="true" data-placement="top" title="Open Map" data-address="<%= call.address %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><i class="fa fa-map-o" aria-hidden="true"></i></button>
-
+						<% if (currentUser) { %>
 						<button type="button" class="btn btn-success btn-sm btn-flag" data-tooltip="true" data-placement="top" title="Flag this!" data-address="<%= call.address %>" data-incidentnum="<%= call.incident_number %>" data-datetime="<%= call.datetime %>" data-type="<%= call.type %>" data-latitude="<%= call.latitude %>" data-longitude="<%= call.longitude %>"><i class="fa fa-flag-o" aria-hidden="true"></i></button>
+						<% } %>
 					</td>
 				</tr>
 			<% }); %>

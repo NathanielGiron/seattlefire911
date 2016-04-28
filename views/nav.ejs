@@ -13,13 +13,20 @@
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/calls">Calls</a></li>
+            <% if (currentUser) { %>
             <li><a href="/flags">References</a></li>
+            <% } %>
             <li><a href="/about">About</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
+		        <% if (currentUser) { %>
+		        <li><a><span class="text"><i class="fa fa-user" aria-hidden="true"></i> <%= currentUser.name %></span></a></li>
+		        <li><a href="/login/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+		        <% } else { %>
 		        <li><a href="/register"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Register</a></li>
 		        <li><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+		        <% } %>
 		      </ul>
         </div><!--/.nav-collapse -->
       </div>

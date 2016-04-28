@@ -6,11 +6,13 @@ module.exports = function(sequelize, DataTypes) {
     datetime: DataTypes.TEXT,
     latitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
-    incident_number: DataTypes.TEXT
+    incident_number: DataTypes.TEXT,
+    userId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        models.flag.belongsTo(models.user);
       }
     }
   });

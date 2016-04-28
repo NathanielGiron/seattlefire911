@@ -16,7 +16,15 @@ router.post('/', function(req, res) {
       password: req.body.password
     }
   }).spread(function(user, created) {
-    res.redirect('/');
+  	if(created) {
+  		req.flash('success', 'Successfully Registered! Please Login')
+    	res.redirect('/');
+    } else {
+    	req.flash('danger', 'Email already taken. Please choose another.')
+    	res.redirect('/register');
+    }
+    
+
   }).catch(function(err) {
     res.send(err);
   });
