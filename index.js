@@ -57,9 +57,15 @@ app.get('/calls', function(req, res) {
 });
 
 app.get('/flags', function(req, res) {
-	db.flag.findAll({where: {userId: req.session.userId}}).then(function(flags) {
-		res.render('flags', {flags: flags})
-	});
+	if (req.currentUser) {
+		db.flag.findAll({where: {userId: req.session.userId}}).then(function(flags) {
+			res.render('flags', {flags: flags})
+		});
+	} else {
+		req.flash('danger', 'You must be logged in.');
+		res.redirect('/');
+
+	}
 });
 
 app.post('/flags', function(req, res) {
