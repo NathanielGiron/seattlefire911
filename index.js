@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
 
 app.get('/calls', function(req, res) {
 
-	request('https://data.seattle.gov/resource/grwu-wqtk.json?$$app_token=' + process.env.SOCRATA_TOKEN, function(err, response, body) {
+	request('https://data.seattle.gov/resource/grwu-wqtk.json?$limit=500&$$app_token=' + process.env.SOCRATA_TOKEN, function(err, response, body) {
 		var dataObj = JSON.parse(body);
 		if(!err && response.statusCode === 200) {
 			res.render('calls', {calls: dataObj});
